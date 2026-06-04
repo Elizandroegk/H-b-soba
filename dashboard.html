@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Hospedaria B-SOBA</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="admin.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+</head>
+
+
+<body>
+    <div class="admin-wrapper">
+
+        <aside class="admin-sidebar">
+            <div class="sidebar-header">
+                <h2><i class="fas fa-home"></i> B-SOBA Admin</h2>
+            </div>
+            <nav class="sidebar-nav">
+                <a href="dashboard.html" class="nav-item active">
+                <i class="fas fa-tachometer-alt"></i> Dashboard
+                </a>
+                <a href="clientes.html" class="nav-item">
+                    <i class="fas fa-users"></i> Clientes
+                </a>
+                <a href="quartos.html" class="nav-item">
+                    <i class="fas fa-bed"></i> Quartos
+                </a>
+                <a href="reservas.html" class="nav-item">
+                    <i class="fas fa-calendar-check"></i> Reservas
+                </a>
+                <a href="pagamentos.html" class="nav-item">
+                    <i class="fas fa-credit-card"></i> Pagamentos
+                </a>
+                <a href="relatorios.html" class="nav-item">
+                    <i class="fas fa-chart-bar"></i> Relatórios
+                </a>
+                <a href="index.html" class="nav-item logout">
+                    <i class="fas fa-sign-out-alt"></i> Sair
+                </a>
+            </nav>
+        </aside>
+
+       
+        <main class="admin-main">
+            <header class="admin-header">
+                <h1>Dashboard</h1>
+                <div class="user-info">
+                    <span>Bem-vindo, Admin</span>
+                    <i class="fas fa-user-circle"></i>
+                </div>
+            </header>
+
+            <div class="admin-container">
+             
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-bed"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3 id="totalQuartos">12</h3>
+                            <p>Quartos</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3 id="totalClientes">45</h3>
+                            <p>Clientes</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-calendar-check"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3 id="totalReservas">23</h3>
+                            <p>Reservas</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3 id="taxaOcupacao">78%</h3>
+                            <p>Ocupação</p>
+                        </div>
+                    </div>
+                </div>
+
+              
+                <div class="quick-actions">
+                    <h2>Ações Rápidas</h2>
+                    <div class="actions-grid">
+                        <button class="action-btn" onclick="window.location.href='clientes.html'">
+                            <i class="fas fa-plus"></i> Novo Cliente
+                        </button>
+                        <button class="action-btn" onclick="window.location.href='reservas.html'">
+                            <i class="fas fa-calendar-plus"></i> Nova Reserva
+                        </button>
+                        <button class="action-btn" onclick="window.location.href='quartos.html'">
+                            <i class="fas fa-bed"></i> Gerir Quartos
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="api.js"></script>
+    <script src="admin.js"></script>
+    <script src="protected.js"></script>
+
+</body>
+</html>

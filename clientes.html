@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clientes - Hospedaria B-SOBA</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="admin.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+</head>
+<body>
+    <div class="admin-wrapper">
+       
+           <aside class="admin-sidebar">
+            <div class="sidebar-header">
+                <h2><i class="fas fa-home"></i> B-SOBA Admin</h2>
+            </div>
+            <nav class="sidebar-nav">
+                <a href="dashboard.html" class="nav-item">
+                    <i class="fas fa-tachometer-alt"></i> Dashboard
+                </a>
+                <a href="clientes.html" class="nav-item active">
+                    <i class="fas fa-users"></i> Clientes
+                </a>
+                <a href="quartos.html" class="nav-item">
+                    <i class="fas fa-bed"></i> Quartos
+                </a>
+                <a href="reservas.html" class="nav-item">
+                    <i class="fas fa-calendar-check"></i> Reservas
+                </a>
+                <a href="pagamentos.html" class="nav-item">
+                    <i class="fas fa-credit-card"></i> Pagamentos
+                </a>
+                <a href="relatorios.html" class="nav-item">
+                    <i class="fas fa-chart-bar"></i> Relatórios
+                </a>
+                <a href="index.html" class="nav-item logout">
+                    <i class="fas fa-sign-out-alt"></i> Sair
+                </a>
+            </nav>
+
+        </aside>
+
+        <main class="admin-main">
+            <header class="admin-header">
+                <h1>👥 Gestão de Clientes</h1>
+                <div class="user-info">
+                    <span>Bem-vindo, Admin</span>
+                    <i class="fas fa-user-circle"></i>
+                </div>
+            </header>
+
+            <div class="admin-container">
+                <!-- Formulário Novo Cliente -->
+                <div class="table-container">
+                    <h2>📝 Novo Cliente</h2>
+                    <form id="clienteForm" class="form-grid">
+                        <div class="form-group">
+                            <label for="nome">Nome Completo *</label>
+                            <input type="text" id="nome" name="nome" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="bi">BI *</label>
+                            <input type="text" id="bi" name="bi" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="telefone">Telefone *</label>
+                            <input type="tel" id="telefone" name="telefone" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email *</label>
+                            <input type="email" id="email" name="email">
+                        </div>
+                        <div class="form-group">
+                            <label for="endereco">Endereço *</label>
+                            <input type="text" id="endereco" name="endereco">
+                        </div>
+                        <button type="submit" class="btn btn-success">
+                            <i class="fas fa-save"></i> Cadastrar Cliente
+                        </button>
+                    </form>
+                </div>
+
+                <!-- Lista de Clientes -->
+                <div class="table-container">
+                    <h2>👥 Clientes Cadastrados</h2>
+                    <table id="clientesTable">
+                        <thead>
+                            <tr>
+                                <th>Nome</th>
+                                <th>BI</th>
+                                <th>Telefone</th>
+                                <th>Email</th>
+                                <th>Data Cadastro</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Dados carregados dinamicamente -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="api.js"></script>
+    <script src="admin.js"></script>
+</body>
+</html>
