@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestão Hospedaria - Pousada VIP</title>
+    
+    <!-- Tailwind CSS via CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Ícones FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Fonte Google -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- CSS Customizado -->
+    <style>
+        /* Reset e Variáveis */
+        :root {
+            --primary: #0f172a;       /* Slate 900 */
+            --secondary: #334155;    /* Slate 700 */
+            --accent: #d97706;       /* Amber 600 */
+            --accent-hover: #b45309; /* Amber 700 */
+            --bg-light: #f8fafc;      /* Slate 50 */
+            --text-main: #1e293b;    /* Slate 800 */
+            --text-muted: #64748b;   /* Slate 500 */
+            --border: #e2e8f0;       /* Slate 200 */
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-light);
+            color: var(--text-main);
+        }
+
+        /* Sidebar */
+        .sidebar {
+            background: linear-gradient(180deg, #1e293b 0%, #0f172a 100%);
+        }
+
+        .sidebar-link {
+            position: relative;
+            transition: all 0.3s ease;
+            border-left: 3px solid transparent;
+        }
+
+        .sidebar-link:hover {
+            background-color: rgba(255, 255, 255, 0.08);
+            padding-left: 20px; /* Efeito deslizante */
+        }
+
+        .sidebar-link.active {
+            background-color: rgba(255, 255, 255, 0.1);
+            border-left-color: var(--accent);
+        }
+
+        .sidebar-link.active::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 100%;
+            width: 3px;
+            background-color: var(--accent);
+            box-shadow: 0 0 10px var(--accent);
+        }
+
+        /* Cards */
+        .card {
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+
+        /* Status dos Quartos */
+        .room-status {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .room-status::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+        }
+
+        .room-free::before { background-color: var(--success); }
+        .room-occupied::before { background-color: var(--danger); }
+        .room-cleaning::before { background-color: var(--warning); }
+        .room-maintenance::before { background-color: var(--text-muted); }
+
+        /* Tabela */
+        .data-table {
+            border-collapse: separate;
+            border-spacing: 0;
+        }
+
+        .data-table th {
+            background-color: #f1f5f9;
+            font-weight: 600;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--text-muted);
+        }
+
+        .data-table td {
+            border-bottom: 1px solid var(--border);
+        }
+
+        .data-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .data-table tr:hover td {
+            background-color: #f8fafc;
+        }
+
+        /* Botões */
+        .btn-primary {
+            background-color: var(--accent);
+            transition: all 0.2s ease;
+        }
+
+        .btn-primary:hover {
+            background-color: var(--accent-hover);
+            transform: translateY(-1px);
+        }
+
+        /* Scrollbar Personalizada */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1; 
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1; 
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8; 
+        }
+
+        /* Animações */
+        @keyframes pulse-glow {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(217, 119, 6, 0.4); }
+            50% { box-shadow: 0 0 0 8px rgba(217, 119, 6, 0); }
+        }
+
+        .pulse-glow {
+            animation: pulse-glow 2s infinite;
+        }
+
+        .fade-in {
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 antialiased">
+
+    <div class="flex h-screen overflow-hidden">
+
+        <!-- ================= SIDEBAR ================= -->
+        <aside class="sidebar w-64 flex flex-col text-white shadow-2xl z-20">
+            <!-- Logo -->
+            <div class="h-20 flex items-center justify-center border-b border-slate-700/50 bg-slate-900/50">
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-lg bg-amber-500 flex items-center justify-center shadow-lg">
+                        <i class="fa-solid fa-bed text-slate-900 text-lg"></i>
+                    </div>
+                    <div>
+                        <h1 class="text-lg font-bold tracking-wide leading-none">POUSADA</h1>
+                        <span class="text-xs text-amber-400 font-semibold tracking-widest uppercase">Manager</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Navegação -->
+            <nav class="flex-1 overflow-y-auto py-6">
+                <ul class="space-y-1 px-3">
+                    <li>
+                        <a href="#" class="sidebar-link active flex items-center px-4 py-3 rounded-lg text-sm font-medium text-gray-100">
+                            <i class="fa-solid fa-chart-pie w-6 text-center text-lg"></i>
+                            <span>Dashboard</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="sidebar-link flex items-center px-4 py-3 rounded-lg text-sm font-medium text-slate-400 hover:text-gray-100">
+                            <i class="fa-solid fa-calendar-check w-6 text-center text-lg"></i>
+                            <span>Reservas</span>
+                            <span class="ml-auto bg-amber-500 text-white text-xs px-2 py-0.5 rounded-full">12</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="sidebar-link flex items-center px-4 py-3 rounded-lg text-sm font-medium text-slate-400 hover:text-gray-100">
+                            <i class="fa-solid fa-door-open w-6 text-center text-lg"></i>
+                            <span>Quartos</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="sidebar-link flex items-center px-4 py-3 rounded-lg text-sm font-medium text-slate-400 hover:text-gray-100">
+                            <i class="fa-solid fa-users w-6 text-center text-lg"></i>
+                            <span>Hóspedes</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="sidebar-link flex items-center px-4 py-3 rounded-lg text-sm font-medium text-slate-400 hover:text-gray-100">
+                            <i class="fa-solid fa-utensils w-6 text-center text-lg"></i>
+                            <span>Café da Manhã</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="sidebar-link flex items-center px-4 py-3 rounded-lg text-sm font-medium text-slate-400 hover:text-gray-100">
+                            <i class="fa-solid fa-sack-dollar w-6 text-center text-lg"></i>
+                            <span>Financeiro</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="sidebar-link flex items-center px-4 py-3 rounded-lg text-sm font-medium text-slate-400 hover:text-gray-100">
+                            <i class="fa-solid fa-gear w-6 text-center text-lg"></i>
+                            <span>Configurações</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+
+            <!-- Perfil Usuário -->
+            <div class="p-4 bg-slate-900/50 border-t border-slate-700/50">
+                <div class="flex items-center gap-3">
+                    <img src="https://i.pravatar.cc/150?img=68" alt="Admin" class="h-10 w-10 rounded-full object-cover border-2 border-amber-500">
+                    <div class="flex-1 min-w-0">
+                        <p class="text-sm font-semibold text-white truncate">Carlos Silva</p>
+                        <p class="text-xs text-slate-400">Gerente Geral</p>
+                    </div>
+                    <button class="text-slate-400 hover:text-white transition">
+                        <i class="fa-solid fa-right-from-bracket text-lg"></i>
+                    </button>
+                </div>
+            </div>
+        </aside>
+
+        <!-- ================= MAIN CONTENT ================= -->
+        <main class="flex-1 flex flex-col overflow-hidden bg-slate-50">
+
+            <!-- Top Bar -->
+            <header class="h-20 bg-white border-b border-slate-200 flex items-center justify-between px-8 shadow-sm z-10">
+                <div class="flex items-center gap-4">
+                    <div class="relative">
+                        <input type="text" placeholder="Buscar hóspede, reserva..." class="w-80 bg-slate-100 border border-slate-200 rounded-lg pl-10 pr-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-amber-500/50 focus:border-amber-500 transition">
+                        <i class="fa-solid fa-search absolute left-3 top-1/2 -translate-y-1/2 text-slate-400"></i>
+                    </div>
+                </div>
+                
+                <div class="flex items-center gap-5">
+                    <!-- Notificações -->
+                    <button class="relative p-2 text-slate-400 hover:text-slate-600 hover:bg-slate-100 rounded-full transition">
+                        <i class="fa-regular fa-bell text-xl"></i>
+                        <span class="absolute top-1 right-1 w-2.5 h-2.5 bg-red-500 rounded-full border-2 border-white"></span>
+                    </button>
+                    
+                    <!-- Data Atual -->
+                    <div class="text-right hidden md:block">
+                        <p class="text-xs text-slate-400 uppercase">Data</p>
+                        <p class="text-sm font-bold text-slate-700" id="currentDate">Carregando...</p>
+                    </div>
+                    
+                    <!-- Botão Nova Reserva -->
+                    <button class="btn-primary flex items-center gap-2 px-5 py-2.5 rounded-lg text-white font-medium shadow-md hover:shadow-lg">
+                        <i class="fa-solid fa-plus"></i>
+                        Nova Reserva
+                    </button>
+                </div>
+            </header>
+
+            <!-- Área de Scroll Conteúdo -->
+            <div class="flex-1 overflow-y-auto p-8">
+
+                <!-- Cards de KPI -->
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8 fade-in">
+                    <!-- Card 1: Ocupação -->
+                    <div class="bg-white rounded-xl shadow-sm card p-5 border-b-4 border-blue-500">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-xs font-bold text-slate-400 uppercase tracking-wider">Ocupação</p>
+                                <div class="flex items-baseline gap-2 mt-1">
+                                    <h3 class="text-3xl font-bold text-slate-800">78%</h3>
+                                    <span class="text-xs text-green-500 font-medium"><i class="fa-solid fa-arrow-up"></i> 5%</span>
+                                </div>
+                            </div>
+                            <div class="w-14 h-14 rounded-full bg-blue-50 flex items-center justify-center text-blue-500">
+                                <i class="fa-solid fa-hotel text-2xl"></i>
+                            </div>
+                        </div>
+                        <div class="w-full bg-slate-100 rounded-full h-1.5 mt-4">
+                            <div class="bg-blue-500 h-1.5 rounded-full" style="width: 78%"></div>
+                        </div>
+                    </div>
+
+                    <!-- Card 2: Check-in -->
+                    <div class="bg-white rounded-xl shadow-sm card p-5 border-b-4 border-green-500">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-xs font-bold text-slate-400 uppercase tracking-wider">Check-ins Hoje</p>
+                                <h3 class="text-3xl font-bold text-slate-800 mt-1">4</h3>
+                            </div>
+                            <div class="w-14 h-14 rounded-full bg-green-50 flex items-center justify-center text-green-500">
+                                <i class="fa-solid fa-arrow-right-to-bracket text-2xl"></i>
+                            </div>
+                        </div>
+                        <p class="text-xs text-slate-400 mt-3">Próximo: 14:00 (Maria)</p>
+                    </div>
+
+                    <!-- Card 3: Check-out -->
+                    <div class="bg-white rounded-xl shadow-sm card p-5 border-b-4 border-amber-500">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-xs font-bold text-slate-400 uppercase tracking-wider">Check-outs Hoje</p>
+                                <h3 class="text-3xl font-bold text-slate-800 mt-1">2</h3>
+                            </div>
+                            <div class="w-14 h-14 rounded-full bg-amber-50 flex items-center justify-center text-amber-500">
+                                <i class="fa-solid fa-arrow-right-from-bracket text-2xl"></i>
+                            </div>
+                        </div>
+                        <p class="text-xs text-slate-400 mt-3">Pendentes: Quarto 102</p>
+                    </div>
+
+                    <!-- Card 4: Receita -->
+                    <div class="bg-white rounded-xl shadow-sm card p-5 border-b-4 border-purple-500">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-xs font-bold text-slate-400 uppercase tracking-wider">Receita (Mês)</p>
+                                <h3 class="text-3xl font-bold text-slate-800 mt-1">R$ 12.450</h3>
+                            </div>
+                            <div class="w-14 h-14 rounded-full bg-purple-50 flex items-center justify-center text-purple-500">
+                                <i class="fa-solid fa-money-bill-wave text-2xl"></i>
+                            </div>
+                        </div>
+                        <p class="text-xs text-green-500 font-medium mt-3"><i class="fa-solid fa-arrow-up"></i> 12% vs mês passado</p>
+                    </div>
+                </div>
+
+                <!-- Seção Principal: Mapa de Quartos e Lista de Atividades -->
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-8">
+                    
+                    <!-- Mapa de Quartos (2/3) -->
+                    <div class="lg:col-span-2 bg-white rounded-xl shadow-sm overflow-hidden">
+                        <div class="p-6 border-b border-slate-100 flex items-center justify-between">
+                            <div>
+                                <h3 class="text-lg font-bold text-slate-800">Mapa de Occupação</h3>
+                                <p class="text-sm text-slate-500">Atualizado em tempo real</p>
+                            </div>
+                            <div class="flex gap-3">
+                                <button class="px-3 py-1 text-xs font-medium bg-slate-100 text-slate-600 rounded-md hover:bg-slate-200">Todos</button>
+                                <button class="px-3 py-1 text-xs font-medium text-green-600 bg-green-50 rounded-md">Livres</button>
+                                <button class="px-3 py-1 text-xs font-medium text-red-600 bg-red-50 rounded-md">Ocupados</button>
+                            </div>
+                        </div>
+                        <div class="p-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols

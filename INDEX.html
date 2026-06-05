@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestão Hospedaria - Painel Admin</title>
+    <!-- Tailwind CSS via CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Ícones -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <!-- Fonte Google -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .sidebar-link:hover { background-color: rgba(255,255,255,0.1); }
+        .sidebar-link.active { border-left: 4px solid #fbbf24; background-color: rgba(255,255,255,0.15); }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800">
+
+    <div class="flex h-screen overflow-hidden">
+
+        <!-- SIDEBAR (Navegação) -->
+        <aside class="w-64 bg-slate-800 text-white flex flex-col shadow-xl z-10">
+            <div class="h-16 flex items-center justify-center border-b border-slate-700">
+                <h1 class="text-xl font-bold tracking-wider"><i class="fa-solid fa-bed text-amber-400 mr-2"></i>POUSADA VIP</h1>
+            </div>
+
+            <nav class="flex-1 overflow-y-auto py-4">
+                <ul class="space-y-1">
+                    <li><a href="#" class="sidebar-link active flex items-center px-6 py-3 text-gray-100 transition-colors"><i class="fa-solid fa-chart-pie w-6"></i> Dashboard</a></li>
+                    <li><a href="#" class="sidebar-link flex items-center px-6 py-3 text-gray-400 hover:text-gray-100 transition-colors"><i class="fa-solid fa-calendar-check w-6"></i> Reservas</a></li>
+                    <li><a href="#" class="sidebar-link flex items-center px-6 py-3 text-gray-400 hover:text-gray-100 transition-colors"><i class="fa-solid fa-door-open w-6"></i> Quartos</a></li>
+                    <li><a href="#" class="sidebar-link flex items-center px-6 py-3 text-gray-400 hover:text-gray-100 transition-colors"><i class="fa-solid fa-users w-6"></i> Hóspedes</a></li>
+                    <li><a href="#" class="sidebar-link flex items-center px-6 py-3 text-gray-400 hover:text-gray-100 transition-colors"><i class="fa-solid fa-sack-dollar w-6"></i> Financeiro</a></li>
+                </ul>
+            </nav>
+
+            <div class="p-4 border-t border-slate-700">
+                <div class="flex items-center">
+                    <img src="https://i.pravatar.cc/150?img=11" alt="Admin" class="h-10 w-10 rounded-full object-cover border-2 border-amber-400">
+                    <div class="ml-3">
+                        <p class="text-sm font-medium">Carlos Silva</p>
+                        <p class="text-xs text-gray-400">Gerente</p>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- CONTEÚDO PRINCIPAL -->
+        <main class="flex-1 flex flex-col overflow-hidden">
+            
+            <!-- TOP BAR -->
+            <header class="h-16 bg-white shadow-sm flex items-center justify-between px-8">
+                <h2 class="text-xl font-semibold text-slate-700">Visão Geral do Dia</h2>
+                <div class="flex items-center space-x-4">
+                    <button class="p-2 text-gray-400 hover:text-blue-600 transition"><i class="fa-regular fa-bell text-xl"></i></button>
+                    <button class="bg-amber-500 hover:bg-amber-600 text-white px-4 py-2 rounded-md shadow-sm text-sm font-medium transition">
+                        <i class="fa-solid fa-plus mr-2"></i> Nova Reserva
+                    </button>
+                </div>
+            </header>
+
+            <!-- AREA DE CONTEÚDO SCROLLÁVEL -->
+            <div class="flex-1 overflow-y-auto p-8">
+                
+                <!-- CARDs DE STATUS (KPIs) -->
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+                    <!-- Card 1 -->
+                    <div class="bg-white rounded-lg shadow p-5 border-l-4 border-blue-500">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-xs text-gray-500 uppercase font-bold">Ocupação Atual</p>
+                                <h3 class="text-2xl font-bold text-gray-800 mt-1">78%</h3>
+                            </div>
+                            <div class="bg-blue-100 p-3 rounded-full text-blue-500"><i class="fa-solid fa-hotel"></i></div>
+                        </div>
+                    </div>
+                    <!-- Card 2 -->
+                    <div class="bg-white rounded-lg shadow p-5 border-l-4 border-green-500">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-xs text-gray-500 uppercase font-bold">Check-ins Hoje</p>
+                                <h3 class="text-2xl font-bold text-gray-800 mt-1">4</h3>
+                            </div>
+                            <div class="bg-green-100 p-3 rounded-full text-green-500"><i class="fa-solid fa-arrow-right-to-bracket"></i></div>
+                        </div>
+                    </div>
+                     <!-- Card 3 -->
+                     <div class="bg-white rounded-lg shadow p-5 border-l-4 border-red-500">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-xs text-gray-500 uppercase font-bold">Check-outs Hoje</p>
+                                <h3 class="text-2xl font-bold text-gray-800 mt-1">2</h3>
+                            </div>
+                            <div class="bg-red-100 p-3 rounded-full text-red-500"><i class="fa-solid fa-arrow-right-from-bracket"></i></div>
+                        </div>
+                    </div>
+                    <!-- Card 4 -->
+                    <div class="bg-white rounded-lg shadow p-5 border-l-4 border-amber-500">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-xs text-gray-500 uppercase font-bold">Receita (Mês)</p>
+                                <h3 class="text-2xl font-bold text-gray-800 mt-1">R$ 12.450</h3>
+                            </div>
+                            <div class="bg-amber-100 p-3 rounded-full text-amber-500"><i class="fa-solid fa-money-bill-wave"></i></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- GRID DUAS COLUNAS: LISTA QUARTOS E TABELA RESERVAS -->
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                    
+                    <!-- COLUNA 1: STATUS DOS QUARTOS (2/3 Largura) -->
+                    <div class="lg:col-span-2 bg-white rounded-lg shadow">
+                        <div class="p-5 border-b border-gray-100 flex justify-between items-center">
+                            <h3 class="font-bold text-lg text-gray-700">Mapa de Quartos</h3>
+                            <span class="text-xs text-blue-500 cursor-pointer hover:underline">Visualizar Tudo</span>
+                        </div>
+                        <div class="p-5 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+                            <!-- Card Quarto -->
+                            <div class="border rounded-lg p-4 hover:shadow-md transition cursor-pointer group">
+                                <div class="flex justify-between items-start mb-2">
+                                    <h4 class="font-bold text-gray-800">101</h4>
+                                    <span class="px-2 py-1 text-xs rounded-full bg-green-100 text-green-700 font-bold">Livre</span>
+                                </div>
+                                <p class="text-xs text-gray-500 mb-3">Suíte Standard</p>
+                                <div class="flex space-x-2 mt-2">
+                                    <button class="flex-1 bg-slate-100 text-slate-600 text-xs py-1 rounded hover:bg-slate-200">Limpez.</button>
+                                    <button class="flex-1 bg-slate-800 text-white text-xs py-1 rounded hover:bg-slate-700">Reservar</button>
+                                </div>
+                            </div>
+
+                            <!-- Card Quarto Occupied -->
+                            <div class="border rounded-lg p-4 bg-gray-50">
+                                <div class="flex justify-between items-start mb-2">
+                                    <h4 class="font-bold text-gray-800">102</h4>
+                                    <span class="px-2 py-1 text-xs rounded-full bg-red-100 text-red-700 font-bold">Ocupado</span>
+                                </div>
+                                <p class="text-xs text-gray-500 mb-3">Suíte Casal</p>
+                                <div class="flex items-center text-xs text-gray-500 mt-2">
+                                    <i class="fa-regular fa-clock mr-1"></i> Saída: 14:00
+                                </div>
+                            </div>
+
+                            <!-- Card Quarto Manutenção -->
+                             <div class="border rounded-lg p-4">
+                                <div class="flex justify-between items-start mb-2">
+                                    <h4 class="font-bold text-gray-800">103</h4>
+                                    <span class="px-2 py-1 text-xs rounded-full bg-yellow-100 text-yellow-700 font-bold">Manut.</span>
+                                </div>
+                                <p class="text-xs text-gray-500 mb-3">Quarto Single</p>
+                                <p class="text-xs text-red-500 mt-2">Pintura Pendente</p>
+                            </div>
+                             <!-- Card Quarto -->
+                             <div class="border rounded-lg p-4 hover:shadow-md transition cursor-pointer group">
+                                <div class="flex justify-between items-start mb-2">
+                                    <h4 class="font-bold text-gray-800">104</h4>
+                                    <span class="px-2 py-1 text-xs rounded-full bg-green-100 text-green-700 font-bold">Livre</span>
+                                </div>
+                                <p class="text-xs text-gray-500 mb-3">Luxo</p>
+                                <div class="flex space-x-2 mt-2">
+                                    <button class="flex-1 bg-slate-100 text-slate-600 text-xs py-1 rounded hover:bg-slate-200">Limpez.</button>
+                                    <button class="flex-1 bg-slate-800 text-white text-xs py-1 rounded hover:bg-slate-700">Reservar</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- COLUNA 2: RESERVAS RECENTES -->
+                    <div class="bg-white rounded-lg shadow">
+                        <div class="p-5 border-b border-gray-100">
+                            <h3 class="font-bold text-lg text-gray-700">Próximas Chegadas</h3>
+                        </div>
+                        <div class="p-0">
+                            <table class="w-full text-sm text-left">
+                                <tbody>
+                                    <tr class="border-b hover:bg-gray-50">
+                                        <td class="p-4">
+                                            <div class="font-bold text-gray-800">Maria Souza</div>
+                                            <div class="text-xs text-gray-500">Check-in: 14:00</div>
+                                        </td>
+                                        <td class="p-4 text-right">
+                                            <span class="text-xs font-semibold text-blue-600 bg-blue-50 px-2 py-1 rounded">Quarto 101</span>
+                                        </td>
+                                    </tr>
+                                    <tr class="border-b hover:bg-gray-50">
+                                        <td class="p-4">
+                                            <div class="font-bold text-gray-800">João Pedro</div>
+                                            <div class="text-xs text-gray-500">Check-in: 18:00</div>
+                                        </td>
+                                        <td class="p-4 text-right">
+                                            <span class="text-xs font-semibold text-blue-600 bg-blue-50 px-2 py-1 rounded">Quarto 104</span>
+                                        </td>
+                                    </tr>
+                                    <tr class="hover:bg-gray-50">
+                                        <td class="p-4">
+                                            <div class="font-bold text-gray-800">Silva & Cia</div>
+                                            <div class="text-xs text-gray-500">Check-in: 20:00</div>
+                                        </td>
+                                        <td class="p-4 text-right">
+                                            <span class="text-xs font-semibold text-blue-600 bg-blue-50 px-2 py-1 rounded">Quarto 102</span>
